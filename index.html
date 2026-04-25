@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Foro</title>
+    <title>Mini Foro Fenix - Acceso</title>
     <style>
-        /* Diseño oscuro y minimalista */
+        /* Mantenemos el fondo oscuro y minimalista que te gusta */
         body { 
-            font-family: Arial, sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background-color: #1e1e1e; 
             color: #ffffff; 
             max-width: 600px;
@@ -16,23 +16,30 @@
         }
         h1 { text-align: center; color: #f6820c; }
         
-        /* Estilos del formulario */
-        .formulario {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+        #seccion-auth, #seccion-foro { display: none; }
+
+        .card {
+            background-color: #2c2c2c;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
-        input[type="text"] {
-            flex: 1;
+
+        input {
+            width: 100%;
             padding: 12px;
+            margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #444;
-            background-color: #2c2c2c;
+            background-color: #1e1e1e;
             color: white;
-            font-size: 16px;
+            box-sizing: border-box;
         }
+
         button { 
-            padding: 12px 20px; 
+            width: 100%;
+            padding: 12px; 
             font-size: 16px; 
             background-color: #f6820c; 
             color: white; 
@@ -40,10 +47,36 @@
             border-radius: 5px; 
             cursor: pointer; 
             font-weight: bold;
+            transition: 0.3s;
         }
         button:hover { background-color: #df7305; }
+        
+        .btn-secundario { background-color: #444; margin-top: 10px; }
+        .btn-secundario:hover { background-color: #555; }
+        
+        /* Nuevo botón de Google */
+        .btn-google { 
+            background-color: #ffffff; 
+            color: #333; 
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-google:hover { background-color: #e0e0e0; }
+        
+        .divisor {
+            text-align: center;
+            margin: 15px 0;
+            color: #aaa;
+            font-size: 14px;
+        }
 
-        /* Estilos de los comentarios */
+        .btn-logout { background-color: #f44336; width: auto; padding: 5px 15px; float: right; }
+
+        /* Estilos del Foro */
+        .formulario-comentario { display: flex; gap: 10px; margin: 20px 0; }
         .comentario-card {
             background-color: #2c2c2c;
             padding: 15px;
@@ -54,37 +87,54 @@
             justify-content: space-between;
             align-items: center;
         }
-        .acciones button {
-            padding: 8px 12px;
-            font-size: 14px;
-            margin-left: 5px;
-        }
+        .acciones button { width: auto; padding: 5px 10px; margin-left: 5px; font-size: 12px; }
         .btn-editar { background-color: #4CAF50; }
-        .btn-editar:hover { background-color: #45a049; }
         .btn-borrar { background-color: #f44336; }
-        .btn-borrar:hover { background-color: #da190b; }
-        .fecha { font-size: 12px; color: #aaa; margin-top: 5px;}
+        .info-usuario { font-size: 14px; color: #f6820c; margin-bottom: 10px; border-bottom: 1px solid #444; padding-bottom: 10px;}
     </style>
 </head>
 <body>
 
-    <h1>Mini Foro Fenix</h1>
-    
-    <form class="formulario" id="form-foro">
-        <input type="text" id="input-comentario" placeholder="Escribe un comentario..." required autocomplete="off">
-        <button type="submit">Publicar</button>
-    </form>
+    <h1>Fenix Network</h1>
 
-    <div id="lista-comentarios">
-        <p style="text-align: center; color: #aaa;">Cargando comentarios...</p>
+    <div id="seccion-auth" class="card">
+        <h2 style="text-align: center; margin-top: 0;">Iniciar Sesión</h2>
+        
+        <input type="email" id="email" placeholder="Correo electrónico">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button id="btn-login">Entrar con Correo</button>
+        <button id="btn-registro" class="btn-secundario">Crear cuenta nueva</button>
+
+        <div class="divisor">O ingresa rápidamente con</div>
+
+        <button id="btn-google" class="btn-google">
+            <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+            Continuar con Google
+        </button>
+    </div>
+
+    <div id="seccion-foro">
+        <div class="info-usuario">
+            Conectado como: <strong id="user-email"></strong>
+            <button class="btn-logout" id="btn-cerrar-sesion">Cerrar Sesión</button>
+        </div>
+
+        <form class="formulario-comentario" id="form-foro">
+            <input type="text" id="input-comentario" placeholder="¿Qué estás pensando?" required autocomplete="off">
+            <button type="submit" style="width: auto;">Publicar</button>
+        </form>
+
+        <div id="lista-comentarios"></div>
     </div>
 
     <script type="module">
-        // 1. Importar las funciones necesarias, incluyendo borrar y actualizar
+        // Importamos TODO lo necesario, incluyendo GoogleAuthProvider y signInWithPopup
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } 
+            from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, updateDoc, query, orderBy } 
+            from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-        // 2. Tu configuración
         const firebaseConfig = {
             apiKey: "AIzaSyAuVximC609FvrFWr1EjbF3o-qPtsHUbg8",
             authDomain: "fenix-97eb9.firebaseapp.com",
@@ -94,111 +144,117 @@
             appId: "1:342747402569:web:7a7628f6323653c3008a98"
         };
 
-        // 3. Inicializar Firebase
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getFirestore(app);
+        
+        // Inicializamos el proveedor de Google
+        const googleProvider = new GoogleAuthProvider();
 
-        // Referencias al DOM
-        const formForo = document.getElementById('form-foro');
-        const inputComentario = document.getElementById('input-comentario');
-        const listaComentarios = document.getElementById('lista-comentarios');
-
-        // Referencia a la colección "foro" ordenada por fecha (más recientes abajo)
-        const foroRef = collection(db, "foro");
-        const consultaForo = query(foroRef, orderBy("fecha", "asc"));
+        const seccionAuth = document.getElementById('seccion-auth');
+        const seccionForo = document.getElementById('seccion-foro');
+        const userEmailSpan = document.getElementById('user-email');
 
         // ==========================================
-        // LEER (Read) - Tiempo Real
+        // GESTIÓN DE ESTADO
         // ==========================================
-        onSnapshot(consultaForo, (snapshot) => {
-            listaComentarios.innerHTML = ""; // Limpiar lista antes de actualizar
-            
-            if(snapshot.empty) {
-                listaComentarios.innerHTML = "<p style='text-align:center; color:#aaa;'>No hay comentarios aún. ¡Sé el primero!</p>";
-                return;
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                seccionAuth.style.display = 'none';
+                seccionForo.style.display = 'block';
+                // Si el usuario viene de Google, puede tener un "displayName", si no, usamos el email
+                userEmailSpan.textContent = user.displayName || user.email;
+                cargarComentarios();
+            } else {
+                seccionAuth.style.display = 'block';
+                seccionForo.style.display = 'none';
             }
-
-            snapshot.forEach((documento) => {
-                const data = documento.data();
-                const id = documento.id; // El ID único del documento en Firestore
-                
-                // Construir el HTML de cada comentario
-                const div = document.createElement('div');
-                div.className = 'comentario-card';
-                div.innerHTML = `
-                    <div>
-                        <div>${data.texto}</div>
-                        <div class="fecha">ID: ${id}</div>
-                    </div>
-                    <div class="acciones">
-                        <button class="btn-editar" data-id="${id}" data-texto="${data.texto}">Editar</button>
-                        <button class="btn-borrar" data-id="${id}">Borrar</button>
-                    </div>
-                `;
-                listaComentarios.prepend(div); // Prepend para que los nuevos salgan arriba
-            });
         });
 
         // ==========================================
-        // CREAR (Create)
+        // LOGIN CON GOOGLE (NUEVO)
         // ==========================================
-        formForo.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evitar que la página se recargue
-            const texto = inputComentario.value.trim();
-            
+        document.getElementById('btn-google').addEventListener('click', async () => {
             try {
-                await addDoc(foroRef, {
-                    texto: texto,
-                    fecha: new Date().getTime() // Usamos un timestamp para poder ordenar
-                });
-                inputComentario.value = ""; // Limpiar el input
+                // Abre la ventana emergente de Google
+                await signInWithPopup(auth, googleProvider);
             } catch (error) {
-                console.error("Error al publicar:", error);
+                console.error("Error de Google Auth:", error);
+                alert("No se pudo iniciar sesión con Google.");
             }
         });
 
         // ==========================================
-        // ACTUALIZAR (Update) Y BORRAR (Delete)
-        // Usamos delegación de eventos en el contenedor padre
+        // LOGIN CON CORREO TRADICIONAL
         // ==========================================
-        listaComentarios.addEventListener('click', async (e) => {
-            
-            // Si hacen clic en BORRAR
-            if (e.target.classList.contains('btn-borrar')) {
-                const idBorrar = e.target.getAttribute('data-id');
-                const confirmar = confirm("¿Estás seguro de borrar este comentario?");
-                if (confirmar) {
-                    try {
-                        // Pasamos la referencia exacta del documento a borrar
-                        await deleteDoc(doc(db, "foro", idBorrar));
-                    } catch (error) {
-                        console.error("Error al borrar:", error);
-                    }
-                }
-            }
-
-            // Si hacen clic en EDITAR
-            if (e.target.classList.contains('btn-editar')) {
-                const idEditar = e.target.getAttribute('data-id');
-                const textoActual = e.target.getAttribute('data-texto');
-                
-                // Pedimos el nuevo texto con un prompt sencillo
-                const nuevoTexto = prompt("Edita tu comentario:", textoActual);
-                
-                // Si el usuario escribió algo y es diferente al actual, actualizamos
-                if (nuevoTexto && nuevoTexto.trim() !== "" && nuevoTexto !== textoActual) {
-                    try {
-                        // Pasamos la referencia exacta del documento a actualizar
-                        await updateDoc(doc(db, "foro", idEditar), {
-                            texto: nuevoTexto
-                        });
-                    } catch (error) {
-                        console.error("Error al editar:", error);
-                    }
-                }
-            }
+        document.getElementById('btn-registro').addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            try {
+                await createUserWithEmailAndPassword(auth, email, pass);
+            } catch (error) { alert("Error: " + error.message); }
         });
 
+        document.getElementById('btn-login').addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (error) { alert("Credenciales incorrectas"); }
+        });
+
+        document.getElementById('btn-cerrar-sesion').addEventListener('click', () => signOut(auth));
+
+        // ==========================================
+        // LÓGICA DEL FORO
+        // ==========================================
+        function cargarComentarios() {
+            const q = query(collection(db, "foro"), orderBy("fecha", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const lista = document.getElementById('lista-comentarios');
+                lista.innerHTML = "";
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const id = docSnap.id;
+                    const div = document.createElement('div');
+                    div.className = 'comentario-card';
+                    div.innerHTML = `
+                        <div>
+                            <strong style="color: #f6820c;">${data.autor || 'Anónimo'}:</strong>
+                            <div style="margin-top: 5px;">${data.texto}</div>
+                        </div>
+                        <div class="acciones">
+                            <button class="btn-editar" onclick="editarComentario('${id}', '${data.texto}')">Editar</button>
+                            <button class="btn-borrar" onclick="borrarComentario('${id}')">Borrar</button>
+                        </div>
+                    `;
+                    lista.appendChild(div);
+                });
+            });
+        }
+
+        document.getElementById('form-foro').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('input-comentario');
+            try {
+                await addDoc(collection(db, "foro"), {
+                    texto: input.value,
+                    // Guardamos el nombre (si viene de Google) o el correo
+                    autor: auth.currentUser.displayName || auth.currentUser.email,
+                    fecha: new Date().getTime()
+                });
+                input.value = "";
+            } catch (error) { console.error(error); }
+        });
+
+        window.borrarComentario = async (id) => {
+            if(confirm("¿Borrar mensaje?")) await deleteDoc(doc(db, "foro", id));
+        };
+
+        window.editarComentario = async (id, textoViejo) => {
+            const nuevo = prompt("Editar:", textoViejo);
+            if(nuevo && nuevo !== textoViejo) await updateDoc(doc(db, "foro", id), { texto: nuevo });
+        };
     </script>
 </body>
 </html>
