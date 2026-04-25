@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Foro Fenix - Acceso</title>
     <style>
-        /* Mantenemos el fondo oscuro y minimalista que te gusta */
+        /* Mantenemos el fondo oscuro y minimalista */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background-color: #1e1e1e; 
@@ -54,7 +54,7 @@
         .btn-secundario { background-color: #444; margin-top: 10px; }
         .btn-secundario:hover { background-color: #555; }
         
-        /* Nuevo botón de Google */
+        /* Botón de Google */
         .btn-google { 
             background-color: #ffffff; 
             color: #333; 
@@ -91,6 +91,15 @@
         .btn-editar { background-color: #4CAF50; }
         .btn-borrar { background-color: #f44336; }
         .info-usuario { font-size: 14px; color: #f6820c; margin-bottom: 10px; border-bottom: 1px solid #444; padding-bottom: 10px;}
+        
+        /* Mensaje para usuarios de solo lectura */
+        #mensaje-lectura {
+            text-align: center;
+            color: #aaa;
+            font-style: italic;
+            margin-bottom: 20px;
+            display: none; /* Oculto por defecto */
+        }
     </style>
 </head>
 <body>
@@ -120,17 +129,19 @@
         </div>
 
         <form class="formulario-comentario" id="form-foro">
-            <input type="text" id="input-comentario" placeholder="¿Qué estás pensando?" required autocomplete="off">
+            <input type="text" id="input-comentario" placeholder="Escribe un anuncio o mensaje..." required autocomplete="off">
             <button type="submit" style="width: auto;">Publicar</button>
         </form>
+
+        <p id="mensaje-lectura">Modo de solo lectura. Únicamente el coordinador puede publicar.</p>
 
         <div id="lista-comentarios"></div>
     </div>
 
     <script type="module">
-        // Importamos TODO lo necesario, incluyendo GoogleAuthProvider y signInWithPopup
+        // Importamos signInWithRedirect para evitar bloqueos en GitHub Pages
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } 
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithRedirect } 
             from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, updateDoc, query, orderBy } 
             from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
@@ -147,46 +158,57 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        
-        // Inicializamos el proveedor de Google
         const googleProvider = new GoogleAuthProvider();
 
         const seccionAuth = document.getElementById('seccion-auth');
         const seccionForo = document.getElementById('seccion-foro');
         const userEmailSpan = document.getElementById('user-email');
+        
+        const formularioForo = document.getElementById('form-foro');
+        const mensajeLectura = document.getElementById('mensaje-lectura');
 
         // ==========================================
-        // GESTIÓN DE ESTADO
+        // CONFIGURACIÓN DEL ROL
+        // ==========================================
+        // Cambia este correo por el que usarás para ser el administrador
+        const CORREO_COORDINADOR = "coordinador@udb.edu.sv"; 
+
+        // ==========================================
+        // GESTIÓN DE ESTADO Y VISTAS
         // ==========================================
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 seccionAuth.style.display = 'none';
                 seccionForo.style.display = 'block';
-                // Si el usuario viene de Google, puede tener un "displayName", si no, usamos el email
                 userEmailSpan.textContent = user.displayName || user.email;
-                cargarComentarios();
+
+                // VALIDACIÓN VISUAL: ¿Es el coordinador?
+                if (user.email === CORREO_COORDINADOR) {
+                    formularioForo.style.display = 'flex'; // Muestra el form
+                    mensajeLectura.style.display = 'none'; // Oculta el mensaje
+                } else {
+                    formularioForo.style.display = 'none'; // Oculta el form
+                    mensajeLectura.style.display = 'block'; // Muestra el mensaje
+                }
+
+                // Le pasamos el usuario actual a la función para que decida si muestra los botones de borrar
+                cargarComentarios(user);
             } else {
                 seccionAuth.style.display = 'block';
                 seccionForo.style.display = 'none';
             }
         });
 
-        // ==========================================
-        // LOGIN CON GOOGLE (NUEVO)
-        // ==========================================
-        document.getElementById('btn-google').addEventListener('click', async () => {
+        // LOGIN CON GOOGLE (Usando Redirect)
+        document.getElementById('btn-google').addEventListener('click', () => {
             try {
-                // Abre la ventana emergente de Google
-                await signInWithPopup(auth, googleProvider);
+                signInWithRedirect(auth, googleProvider);
             } catch (error) {
                 console.error("Error de Google Auth:", error);
-                alert("No se pudo iniciar sesión con Google.");
             }
         });
 
-        // ==========================================
-        // LOGIN CON CORREO TRADICIONAL
-        // ==========================================
+        // LOGIN CON CORREO
         document.getElementById('btn-registro').addEventListener('click', async () => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
@@ -208,25 +230,36 @@
         // ==========================================
         // LÓGICA DEL FORO
         // ==========================================
-        function cargarComentarios() {
+        function cargarComentarios(userActual) {
             const q = query(collection(db, "foro"), orderBy("fecha", "desc"));
+            
             onSnapshot(q, (snapshot) => {
                 const lista = document.getElementById('lista-comentarios');
                 lista.innerHTML = "";
+                
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
                     const id = docSnap.id;
                     const div = document.createElement('div');
                     div.className = 'comentario-card';
+                    
+                    // Solo inyectamos los botones si el que lee es el coordinador
+                    let botonesHTML = "";
+                    if (userActual && userActual.email === CORREO_COORDINADOR) {
+                        botonesHTML = `
+                            <div class="acciones">
+                                <button class="btn-editar" onclick="editarComentario('${id}', '${data.texto}')">Editar</button>
+                                <button class="btn-borrar" onclick="borrarComentario('${id}')">Borrar</button>
+                            </div>
+                        `;
+                    }
+
                     div.innerHTML = `
                         <div>
                             <strong style="color: #f6820c;">${data.autor || 'Anónimo'}:</strong>
                             <div style="margin-top: 5px;">${data.texto}</div>
                         </div>
-                        <div class="acciones">
-                            <button class="btn-editar" onclick="editarComentario('${id}', '${data.texto}')">Editar</button>
-                            <button class="btn-borrar" onclick="borrarComentario('${id}')">Borrar</button>
-                        </div>
+                        ${botonesHTML}
                     `;
                     lista.appendChild(div);
                 });
@@ -239,12 +272,11 @@
             try {
                 await addDoc(collection(db, "foro"), {
                     texto: input.value,
-                    // Guardamos el nombre (si viene de Google) o el correo
                     autor: auth.currentUser.displayName || auth.currentUser.email,
                     fecha: new Date().getTime()
                 });
                 input.value = "";
-            } catch (error) { console.error(error); }
+            } catch (error) { console.error("No tienes permisos para publicar", error); }
         });
 
         window.borrarComentario = async (id) => {
