@@ -1,0 +1,294 @@
+/* ==========================================
+   ESTILOS GENERALES Y FONDO
+   ========================================== */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    color: #ffffff; 
+    max-width: 800px; 
+    margin: 0 auto;
+    padding: 30px; 
+    
+    background-color: #0d1115; 
+    background-image: url('login2.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+}
+
+/* Título principal con degradado de la nueva paleta azul */
+h1 { 
+    text-align: center; 
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    background: #00000000;
+    background-color: #084f8500;
+    
+
+
+    text-shadow: 0 4px 15px rgba(16, 133, 184, 0.3); 
+}
+
+#seccion-auth, #seccion-foro, #vista-dashboard { display: none; }
+
+/* ==========================================
+   ENCABEZADO (Barra de usuario)
+   ========================================== */
+.header-foro {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    background: rgba(20, 25, 30, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.info-usuario { font-size: 14px; font-weight: bold; color: #fff;}
+/* Celeste suave para el nombre del usuario */
+.info-usuario span { color: #8FBFD6; font-weight: normal; margin-left: 5px; }
+.titulo-seccion { text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.8); margin-bottom: 25px; color: #eee;}
+
+/* ==========================================
+   TARJETAS PRINCIPALES (GLASSMORPHISM)
+   ========================================== */
+.card, .card-glass {
+    background: rgba(30, 35, 45, 0.65); 
+    backdrop-filter: blur(16px); 
+    
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.card { margin-bottom: 20px; text-align: center; max-width: 500px; margin: 0 auto; }
+
+/* Efecto hover interactivo para las tarjetas del muro */
+.comentario-card {
+    background: rgba(30, 35, 45, 0.65); 
+    backdrop-filter: blur(16px); 
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+#vista-publica .comentario-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    background: rgba(40, 45, 55, 0.75);
+}
+
+/* ==========================================
+   ESTILOS INTERNOS DE LA TARJETA
+   ========================================== */
+.header-tarjeta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+/* Etiqueta Azul */
+.badge-estudio { 
+    background: rgba(16, 133, 184, 0.2); color: #8FBFD6; 
+    padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+}
+.fecha-tarjeta { font-size: 12px; color: #aaa; }
+
+.titulo-post { margin: 0 0 12px 0; color: #fff; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);}
+.texto-post { margin: 0; color: #ccc; font-size: 15px; line-height: 1.6;}
+
+.footer-tarjeta {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 20px;
+    font-size: 13px; color: #999;
+}
+.autor-icono { display: flex; align-items: center; gap: 8px; }
+.comentarios-icono { display: flex; align-items: center; gap: 5px; color: #fff;}
+
+/* ==========================================
+   FORMULARIOS Y CAMPOS
+   ========================================== */
+input, textarea {
+    width: 100%; padding: 14px; margin: 10px 0; border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15); background-color: rgba(0, 0, 0, 0.4);
+    color: white; box-sizing: border-box; font-family: inherit; font-size: 14px;
+    transition: 0.3s;
+}
+textarea { resize: vertical; }
+/* Foco en los inputs con el azul principal */
+input:focus, textarea:focus { outline: none; border-color: #1085B8; background-color: rgba(0,0,0,0.6);}
+
+/* ==========================================
+   BOTONES
+   ========================================== */
+button { 
+    padding: 12px 20px; font-size: 15px; background-color: #1085B8; color: white; 
+    border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
+}
+/* Hover con azul más oscuro */
+button:hover { background-color: #084E85; box-shadow: 0 0 15px rgba(16, 133, 184, 0.4); }
+
+.btn-google { 
+    background-color: rgba(255, 255, 255, 0.05); color: #ffffff; width: 100%; margin-top: 15px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.btn-google:hover { background-color: rgba(255, 255, 255, 0.15); }
+
+.btn-secundario { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.2); width: auto; padding: 8px 15px; font-size: 14px;}
+.btn-secundario:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+.btn-logout { background-color: rgba(244, 67, 54, 0.2); border: 1px solid rgba(244, 67, 54, 0.5); width: auto; padding: 8px 15px; font-size: 14px; }
+.btn-logout:hover { background-color: rgba(244, 67, 54, 0.8); }
+
+.btn-editar { background-color: rgba(76, 175, 80, 0.8); }
+.btn-borrar { background-color: rgba(244, 67, 54, 0.8); }
+
+.btn-ver-tema { background-color: transparent; border: 1px solid rgba(16, 133, 184, 0.5); color: #8FBFD6; margin-top: 15px; width: 100%; border-radius: 8px;}
+.btn-ver-tema:hover { background-color: rgba(16, 133, 184, 0.15); color: #fff;}
+
+/* ==========================================
+   DASHBOARD
+   ========================================== */
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+/* Número de estadística en azul vibrante */
+.stat-numero { font-size: 54px; color: #1085B8; margin: 10px 0; font-weight: bold; text-shadow: 0 4px 10px rgba(0,0,0,0.5);}
+
+.acciones { display: flex; flex-direction: column; gap: 8px; justify-content: center; margin-top: 15px;}
+.acciones button { width: 100%; padding: 8px 12px; margin: 0; font-size: 13px; }
+
+/* ==========================================
+   VISTA DE LECTURA Y COMENTARIOS
+   ========================================== */
+#btn-volver-muro { transition: 0.2s; background: transparent; border: none; font-size: 16px; color: #aaa; cursor: pointer; padding: 0; box-shadow: none; margin-bottom: 20px;}
+#btn-volver-muro:hover { color: #8FBFD6 !important; transform: translateX(-5px); background: transparent; box-shadow: none;}
+
+.burbuja-comentario {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 18px;
+    border-radius: 12px;
+}
+.burbuja-header { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; }
+.burbuja-autor { font-size: 14px; font-weight: bold; color: #fff;}
+.burbuja-fecha { font-size: 12px; color: #888; }
+.burbuja-texto { font-size: 15px; margin: 0; line-height: 1.6; color: #ccc;}
+
+.input-comentario-flotante {
+    display: flex; gap: 10px; align-items: center; 
+    background: rgba(0,0,0,0.5); 
+    padding: 6px 15px; 
+    border-radius: 30px; 
+    border: 1px solid rgba(255,255,255,0.15);
+}
+.input-comentario-flotante input {
+    margin: 0; border: none; background: transparent; flex: 1; padding: 12px 0;
+}
+/* Botón de enviar comentario tipo chat en Azul Marino */
+.input-comentario-flotante button {
+    width: auto; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center;
+    background-color: #084E85; 
+}
+.input-comentario-flotante button:hover { background-color: #1085B8; }
+
+.btn-borrar-comentario {
+    background: rgba(244, 67, 54, 0.1); color: #ff5252;
+    border: 1px solid rgba(244, 67, 54, 0.3); border-radius: 6px;
+    padding: 4px 10px; font-size: 11px; cursor: pointer; transition: 0.2s;
+}
+.btn-borrar-comentario:hover { background: rgba(244, 67, 54, 0.8); color: white; }
+
+/* ==========================================
+   VENTANAS MODALES
+   ========================================== */
+.modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8); z-index: 1000;
+    justify-content: center; align-items: center;
+    backdrop-filter: blur(5px);
+}
+.modal-content { width: 90%; max-width: 550px; animation: aparecer 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+@keyframes aparecer { 
+    from { opacity: 0; transform: translateY(30px) scale(0.95); } 
+    to { opacity: 1; transform: translateY(0) scale(1); } 
+}
+
+@media (max-width: 600px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .header-foro { flex-direction: column; gap: 15px; align-items: center; }
+    .acciones { flex-direction: row; width: 100%; }
+}
+
+/* ==========================================
+   ESTILOS DE VISTA DE LECTURA Y COMENTARIOS
+   ========================================== */
+
+
+/* Tarjetas de comentarios estilo foro moderno */
+.burbuja-comentario {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+}
+.burbuja-header { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; }
+.burbuja-autor { font-size: 14px; font-weight: bold; color: #fff;}
+.burbuja-fecha { font-size: 11px; color: #888; }
+.burbuja-texto { font-size: 14px; margin: 0; line-height: 1.5; color: #ddd;}
+
+/* Barra de enviar comentario al estilo app móvil */
+.input-comentario-flotante {
+    display: flex; gap: 10px; align-items: center; 
+    background: rgba(0,0,0,0.6); 
+    padding: 8px 15px; 
+    border-radius: 30px; 
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.input-comentario-flotante input {
+    margin: 0; border: none; background: transparent; flex: 1; padding: 10px 0; outline: none !important; box-shadow: none !important;
+}
+.input-comentario-flotante button {
+    width: auto; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center;
+    background-color: #6C5CE7; /* Un color morado similar a la imagen */
+}
+.input-comentario-flotante button:hover { background-color: #5b4bc4; }
+
+.btn-ver-tema { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255,255,255,0.3); color: white; margin-top: 10px; width: 100%;}
+.btn-ver-tema:hover { background-color: rgba(255, 255, 255, 0.25); }
+
+
+/* ==========================================
+   ESTILOS NUEVOS: TARJETA TIPO CLASSROOM Y BORRADO
+   ========================================== */
+
+/* Etiqueta superior */
+.header-tarjeta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.badge-estudio { 
+    background: rgba(100, 100, 255, 0.2); color: #a4a4ff; 
+    padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+}
+.fecha-tarjeta { font-size: 12px; color: #aaa; }
+
+/* Pie de la tarjeta (Autor y contador de comentarios) */
+.footer-tarjeta {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; margin-top: 15px;
+    font-size: 13px; color: #aaa;
+}
+.autor-icono { display: flex; align-items: center; gap: 8px; }
+.comentarios-icono { display: flex; align-items: center; gap: 5px; }
+
+/* Botón pequeño para borrar comentarios en el hilo */
+.btn-borrar-comentario {
+    background: rgba(244, 67, 54, 0.2); color: #ff5252;
+    border: 1px solid rgba(244, 67, 54, 0.4); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; cursor: pointer; transition: 0.2s;
+}
+.btn-borrar-comentario:hover { background: rgba(244, 67, 54, 0.8); color: white; }
